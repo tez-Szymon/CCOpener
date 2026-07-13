@@ -1,43 +1,43 @@
 # CCOpener
 
-Natywna aplikacja paska menu macOS do szybkiego uruchamiania Claude Code w wybranym projekcie.
+A native macOS menu bar app for quickly launching Claude Code in a selected project.
 
-## Funkcje
+## Features
 
-- ręczne dodawanie projektów,
-- dodawanie folderów, których bezpośrednie podfoldery są automatycznie widoczne jako projekty,
-- przypinanie ulubionych projektów na górze listy,
-- wyszukiwanie po nazwie i ścieżce,
-- uruchamianie `claude` w nowym oknie systemowego Terminala,
-- działanie z górnego paska menu, bez dodatkowej ikony w Docku,
-- projekty indeksowane w Spotlight — wyszukaj `CCOpener` lub nazwę projektu i naciśnij Enter,
-- lokalne zapisywanie konfiguracji.
+- Add projects manually.
+- Add folders whose immediate subfolders are automatically listed as projects.
+- Pin favorite projects to the top of the list.
+- Search by project name or path.
+- Launch `claude` in a new system Terminal window.
+- Run from the menu bar without an additional Dock icon.
+- Find indexed projects in Spotlight by searching for `CCOpener` or a project name and pressing Return.
+- Store configuration locally.
 
-## Uruchomienie
+## Running
 
-Wymagane są macOS 14+, Xcode Command Line Tools i zainstalowana komenda `claude`.
+Requires macOS 14 or later, Xcode Command Line Tools, and the `claude` command installed.
 
 ```bash
 swift run CCOpener
 ```
 
-Przy pierwszym uruchomieniu macOS może poprosić o zgodę na sterowanie aplikacją Terminal.
+On first launch, macOS may ask for permission to control Terminal.
 
-## Budowanie aplikacji `.app`
+## Building the `.app`
 
 ```bash
 ./scripts/build-app.sh
 open dist/CCOpener.app
 ```
 
-Gotową aplikację z katalogu `dist` można przenieść do `/Applications`.
+You can move the built app from `dist` to `/Applications`.
 
 ## Xcode
 
-Pakiet można otworzyć bez generowania projektu:
+You can open the package without generating an Xcode project:
 
 ```bash
 open Package.swift
 ```
 
-Następnie wybierz schemat `CCOpener` i uruchom aplikację.
+Then select the `CCOpener` scheme and run the app.
