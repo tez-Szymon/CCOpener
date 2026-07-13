@@ -10,6 +10,7 @@ Natywna aplikacja paska menu macOS do szybkiego uruchamiania Claude Code w wybra
 - wyszukiwanie po nazwie i ścieżce,
 - uruchamianie `claude` w nowym oknie systemowego Terminala,
 - działanie z górnego paska menu, bez dodatkowej ikony w Docku,
+- projekty indeksowane w Spotlight — wyszukaj `CCOpener` lub nazwę projektu i naciśnij Enter,
 - lokalne zapisywanie konfiguracji.
 
 ## Uruchomienie

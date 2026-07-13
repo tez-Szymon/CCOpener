@@ -4,6 +4,8 @@ import Foundation
 
 @MainActor
 final class ProjectStore: ObservableObject {
+    static let shared = ProjectStore()
+
     @Published private(set) var configuration: StoredConfiguration
     @Published private(set) var scannedProjects: [Project] = []
     @Published var selectedProjectID: String?
@@ -90,6 +92,7 @@ final class ProjectStore: ObservableObject {
         configuration.manualProjectPaths.append(path)
         save()
         selectedProjectID = path
+        syncSpotlightIndex()
     }
 
     func addScanFolder(path: String) {
@@ -105,6 +108,7 @@ final class ProjectStore: ObservableObject {
         configuration.favoritePaths.remove(project.path)
         if selectedProjectID == project.id { selectedProjectID = nil }
         save()
+        syncSpotlightIndex()
     }
 
     func removeScanFolder(path: String) {
@@ -137,6 +141,7 @@ final class ProjectStore: ObservableObject {
         scannedProjects = discovered.values.sorted {
             $0.name.localizedStandardCompare($1.name) == .orderedAscending
         }
+        syncSpotlightIndex()
     }
 
     func launch(_ project: Project) {
@@ -146,6 +151,12 @@ final class ProjectStore: ObservableObject {
         } catch {
             launchError = error.localizedDescription
         }
+    }
+
+    func launchProject(atPath path: String) {
+        let project = allProjects.first { $0.path == path }
+            ?? Project(path: path, origin: .manual)
+        launch(project)
     }
 
     private func chooseDirectory(prompt: String) -> String? {
@@ -169,5 +180,9 @@ final class ProjectStore: ObservableObject {
     private func save() {
         guard let data = try? JSONEncoder().encode(configuration) else { return }
         defaults.set(data, forKey: configurationKey)
+    }
+
+    private func syncSpotlightIndex() {
+        SpotlightIndexer.replaceProjects(with: allProjects)
     }
 }
