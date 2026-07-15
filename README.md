@@ -32,6 +32,18 @@ open dist/CCOpener.app
 
 You can move the built app from `dist` to `/Applications`.
 
+## Raycast
+
+Repozytorium zawiera lokalne rozszerzenie Raycast z przeszukiwalną listą projektów CCOpener.
+
+Po zbudowaniu i pierwszym uruchomieniu aplikacji wykonaj:
+
+```bash
+./scripts/install-raycast-extension.sh
+```
+
+Następnie uruchamiaj komendę `Open Claude Code Project` z Raycast. Rozszerzenie korzysta z tej samej listy projektów i ulubionych co aplikacja. Szczegóły znajdują się w [`raycast-extension/README.md`](raycast-extension/README.md).
+
 ## Xcode
 
 You can open the package without generating an Xcode project:
