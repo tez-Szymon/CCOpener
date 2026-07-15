@@ -25,7 +25,8 @@ enum TerminalLauncher {
             set projectPath to item 1 of argv
             tell application "Terminal"
                 activate
-                do script "cd " & quoted form of projectPath & " && claude"
+                set projectTab to do script "cd " & quoted form of projectPath
+                do script "claude" in projectTab
             end tell
         end run
         """
