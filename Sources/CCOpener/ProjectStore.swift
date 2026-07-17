@@ -15,10 +15,16 @@ final class ProjectStore: ObservableObject {
     private let defaults: UserDefaults
     private let configurationKey = "ccopener.configuration.v1"
     private let fileManager: FileManager
+    private let catalogURL: URL?
 
-    init(defaults: UserDefaults = .standard, fileManager: FileManager = .default) {
+    init(
+        defaults: UserDefaults = .standard,
+        fileManager: FileManager = .default,
+        catalogURL: URL? = ProjectCatalog.defaultURL()
+    ) {
         self.defaults = defaults
         self.fileManager = fileManager
+        self.catalogURL = catalogURL
 
         if let data = defaults.data(forKey: configurationKey),
            let decoded = try? JSONDecoder().decode(StoredConfiguration.self, from: data) {
@@ -70,6 +76,7 @@ final class ProjectStore: ObservableObject {
             configuration.favoritePaths.insert(project.path)
         }
         save()
+        syncProjectCatalog()
         objectWillChange.send()
     }
 
@@ -159,6 +166,16 @@ final class ProjectStore: ObservableObject {
         launch(project)
     }
 
+    func launchConfiguredProject(atPath path: String) {
+        let path = canonicalPath(path)
+        guard let project = allProjects.first(where: { $0.path == path }) else {
+            launchError = "Projekt nie znajduje się w konfiguracji CCOpener."
+            return
+        }
+
+        launch(project)
+    }
+
     private func chooseDirectory(prompt: String) -> String? {
         let panel = NSOpenPanel()
         panel.title = prompt
@@ -184,5 +201,16 @@ final class ProjectStore: ObservableObject {
 
     private func syncSpotlightIndex() {
         SpotlightIndexer.replaceProjects(with: allProjects)
+        syncProjectCatalog()
+    }
+
+    private func syncProjectCatalog() {
+        guard let catalogURL else { return }
+        try? ProjectCatalogWriter.write(
+            projects: allProjects,
+            favoritePaths: configuration.favoritePaths,
+            to: catalogURL,
+            fileManager: fileManager
+        )
     }
 }
