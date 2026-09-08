@@ -23,6 +23,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ProjectStore.shared.refreshScannedProjects()
     }
 
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard let path = urls.lazy.compactMap(CCOpenerURL.projectPath(from:)).first else {
+            return
+        }
+
+        ProjectStore.shared.refreshScannedProjects()
+        ProjectStore.shared.launchConfiguredProject(atPath: path)
+    }
+
     func application(
         _ application: NSApplication,
         continue userActivity: NSUserActivity,
