@@ -8,7 +8,7 @@ A native macOS menu bar app for quickly launching Claude Code in a selected proj
 - Add folders whose immediate subfolders are automatically listed as projects.
 - Pin favorite projects to the top of the list.
 - Search by project name or path.
-- Launch `claude` in a new system Terminal window.
+- Launch `claude` in a new tab of the front Apple Terminal window, or a new window if none is open.
 - Run from the menu bar without an additional Dock icon.
 - Find indexed projects in Spotlight by searching for `CCOpener` or a project name and pressing Return.
 - Store configuration locally.
@@ -21,7 +21,13 @@ Requires macOS 14 or later, Xcode Command Line Tools, and the `claude` command i
 swift run CCOpener
 ```
 
-On first launch, macOS may ask for permission to control Terminal.
+On first launch, macOS may ask for permission to control Terminal and System Events.
+Opening tabs also requires enabling CCOpener in System Settings > Privacy & Security > Accessibility.
+If Accessibility access is denied, CCOpener requests permission and explains how to enable it.
+Local ad-hoc builds can invalidate an earlier permission grant. If CCOpener is already enabled but
+macOS still denies access, remove its Accessibility entry and add `/Applications/CCOpener.app` again.
+Other tab-creation failures fall back to a new window and are recorded in the macOS log under
+subsystem `com.ccopener.app`, category `TerminalLauncher`.
 
 ## Building the `.app`
 
