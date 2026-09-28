@@ -174,10 +174,10 @@ async function launchProject(project: Project) {
 
   try {
     const url = `ccopener://launch?path=${encodeURIComponent(project.path)}`;
+    await closeMainWindow();
     await open(url);
     toast.style = Toast.Style.Success;
     toast.title = `Uruchomiono ${project.name}`;
-    await closeMainWindow();
   } catch (launchError) {
     toast.style = Toast.Style.Failure;
     toast.title = "Nie udało się uruchomić projektu";

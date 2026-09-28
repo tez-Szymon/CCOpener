@@ -128,7 +128,7 @@ struct ContentView: View {
             ContentUnavailableView(
                 "Wybierz projekt",
                 systemImage: "terminal",
-                description: Text("Claude Code otworzy się w nowym oknie Terminala.")
+                description: Text("Claude Code otworzy się w nowej karcie Terminala lub w nowym oknie, jeśli żadne nie jest otwarte.")
             )
         }
     }
